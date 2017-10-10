@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Node_param_entity_presave.
+ */
+function node_param_entity_presave(EntityInterface $node) {
+  if (method_exists($node, 'getType') && $node->getType() == 'param') {
+    $time = strtotime($node->field_param_data->value);
+    $title = format_date($time, 'tolko_data');
+    $node->title->setValue($title);
+  }
+}
